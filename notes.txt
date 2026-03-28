@@ -1,0 +1,109 @@
+<Card
+            className="group overflow-hidden border border-border/70 bg-card/95 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+            key={blog._id}
+          >
+            <CardHeader className="min-w-0  space-y-3 border-b bg-linear-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900">
+              <div className="text-xs font-semibold uppercase pt-2 tracking-wide text-muted-foreground">
+                Title
+              </div>
+              <CardTitle className="min-w-0 text-left text-lg leading-snug whitespace-normal  wrap-anywhere">
+                {blog.title}
+              </CardTitle>
+            </CardHeader>
+
+            <CardContent>
+               <div className="text-xs font-semibold  uppercase  tracking-wide text-muted-foreground">
+                Description
+              </div>
+              <p
+                className={`text-sm leading-7 text-left text-foreground/90 ${
+                  !isExpanded ? "line-clamp-4" : ""
+                }`}
+              >
+                {blog.content}
+              </p>
+              {blog.content.length > 100 && (
+                <div className="mt-3 text-right">
+                  <Button
+                    variant="link"
+                    className="h-auto p-0 text-sm"
+                    onClick={() => toggleExpand(blog._id)}
+                  >
+                    {isExpanded ? "Read less" : "Read more"}
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+
+            <CardFooter className="flex items-center gap-3 border-t bg-muted/30">
+              <Avatar>
+                {blog.author.avatar ? (
+                  <AvatarImage src={blog.author.avatar.url} />
+                ) : (
+                  <AvatarFallback>{blog.author.username[0]}</AvatarFallback>
+                )}
+              </Avatar>
+              <div className="text-left">
+                <p className="text-xs uppercase tracking-wide text-muted-foreground">Author</p>
+                <p className="text-sm font-semibold">{blog.author.username}</p>
+              </div>
+            </CardFooter>
+          </Card>
+
+          1️⃣ Initial render
+React renders blogs
+last blog div gets ref={lastBlogRef} → React calls lastBlogRef(node)
+isFetching is false → function continues
+IntersectionObserver is created and starts watching the last blog div
+2️⃣ Scroll to last blog
+Last blog enters viewport → entries[0].isIntersecting === true
+setPage(prev => prev + 1) → page state increments
+React re-renders → API call triggered to fetch next page
+3️⃣ While data is being fetched
+isFetching is now true (RTK Query or your loading state)
+next render triggers lastBlogRef(node) again
+But if (isFetching) return; prevents:
+Recreating observer
+Observing the node again
+Accidentally incrementing page multiple times
+
+✅ This is super important because without it:
+
+Observer callback could run multiple times while API is in flight
+Page number could keep increasing → you would keep calling API → race conditions / broken scroll
+4️⃣ After data arrives
+isFetching becomes false again
+React re-renders → lastBlogRef(node) runs normally
+IntersectionObserver is attached to the new last blog → infinite scroll continues
+5️⃣ Why this is amazing
+Using isFetching inside the callback is like saying:
+
+“Don’t watch / trigger the next page until the previous request is finished.”
+
+This ensures API calls don’t overlap, page increments safely, and infinite scroll works smoothly
+6️⃣ TL;DR Flow
+Render blogs --> lastBlogRef(node) called
+    |
+    v
+Observer watches last blog
+    |
+Scroll --> last blog visible?
+    |
+    v
+entries[0].isIntersecting true --> setPage(prev+1)
+    |
+    v
+React re-render + API fetch
+    |
+    v
+isFetching = true --> lastBlogRef exits early
+    |
+Data arrives --> isFetching false
+    |
+    v
+New last blog --> lastBlogRef(node) called again
+Repeat...
+
+✅ Without isFetching → callback triggers multiple times → page increments too fast → API requests overlap → broken scroll
+
+💡 Pro Tip:
