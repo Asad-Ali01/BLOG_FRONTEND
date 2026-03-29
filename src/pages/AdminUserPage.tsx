@@ -5,9 +5,9 @@ import {
   useDeleteUserApiMutation,
   useGetUserApiQuery,
 } from "@/features/admin/adminApi";
-import DeleteConfirmModal from "@/components/ui/delete-blog-modal";
+import DeleteConfirmModal from "@/components/shared/delete-blog-modal";
 import { useEffect, useState } from "react";
-import EditModal from "@/components/ui/edit-user-modal";
+import EditModal from "@/features/components/edit-user-modal";
 import { Delete, Edit } from "lucide-react";
 import { Input } from "antd";
 import { useDebounce } from "@/hooks/use-debounce";
@@ -27,8 +27,7 @@ function AdminUserPage() {
   const [blogId, setBlogId] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<string>("");
-  console.log(cursor);
-
+  console.log(allUsersApiData);
   useEffect(() => {
     if (allUsersApiData?.data.users) {
       if (cursor == null) {
@@ -134,7 +133,7 @@ function AdminUserPage() {
         />
         </div>
       <Table dataSource={dataSource} scroll={{ x: 800 }} columns={columns} pagination={{pageSize:4}}/>
-      <div className={`${search == "" ? "" : "hidden"} `}>
+      <div className={`${search == "" ? "" : "hidden"} ${allUsersApiData?.data.nextCursor == null ? "hidden" : ""}`}>
 
   <Button
   style={{ marginBottom: "40px" }}
@@ -143,7 +142,6 @@ function AdminUserPage() {
         setCursor(allUsersApiData.data.nextCursor);
       }
     }}
-    
     >
     Load more
   </Button>

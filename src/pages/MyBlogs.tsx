@@ -16,7 +16,7 @@ import { useAppSelector } from "@/features/auth/auth.types";
 import { Delete, Edit } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import DeleteConfirmModal from "@/components/ui/delete-blog-modal";
+import DeleteConfirmModal from "@/components/shared/delete-blog-modal";
 import type { IBlog } from "@/features/blog/blog.types";
 function MyBlogs() {
   const [expandedIds, setExpandedIds] = useState<string[]>([]);
@@ -67,15 +67,16 @@ function MyBlogs() {
 
   const handleConfirmDelete = async () => {
     const res = await deleteBlogApi({ _id: blogId }).unwrap();
+    setAllBlogs((prev) => prev.filter((b) => b._id !== blogId))
     return res;
   };
 
   return (
     <div
-      className={`grid gap-3 grid-cols-1  lg:grid-cols-2 xl:grid-cols-3  2xl:grid-cols-5 place-items-center ${blogs?.data.blogs.length === 0 && "h-full"} ${!isAuthenticated ? "py-10" : "pb-10"}`}
+      className={`gap-6 flex flex-col items-center    ${blogs?.data.blogs.length === 0 && "h-full"} ${!isAuthenticated ? "py-10" : "pb-10"}`}
     >
       {allBlogs.length === 0 ? (
-        <h2 className="text-2xl bg-linear-to-r from-white via-blue-500 to-blue-900 bg-clip-text text-transparent">
+        <h2 className="text-2xl bg-linear-to-r dark:from-white from-black via-blue-500 to-blue-900 bg-clip-text text-transparent">
           No Blogs Found
         </h2>
       ) : (
@@ -87,9 +88,9 @@ function MyBlogs() {
               key={blog._id}
               ref={index == allBlogs.length - 1 ? lastBlogref : null}
             >
-              <Card className="w-67 sm:w-90 lg:w-75">
+              <Card className="w-65  sm:w-110 lg:w-155 xl:w-200 2xl:w-300 ">
                 <CardHeader className="flex items-center justify-between w-full ">
-                  <div className="flex justify-between items-center gap-1 w-[60%]">
+                  <div className="flex justify-start items-center gap-3 w-[60%]">
                     <CardTitle className="truncate ">{blog.title}</CardTitle>
                     <Button variant="outline" size="xs">
                       {blog.status}
@@ -114,7 +115,7 @@ function MyBlogs() {
                 <CardContent>
                   <div>
                     <p
-                      className={`text-sm dark:text-white text-gray-700 text-left ${
+                      className={`text-sm dark:text-white  break-words text-gray-700 text-left ${
                         !isExpanded ? "line-clamp-4" : ""
                       }`}
                     >

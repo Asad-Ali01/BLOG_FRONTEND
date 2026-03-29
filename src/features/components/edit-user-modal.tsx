@@ -13,7 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "./input";
+import { Input } from "../../components/ui/input";
 import {
   Select,
   SelectContent,
@@ -22,10 +22,10 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "./select";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,  AlertDialogFooter,  AlertDialogTitle } from "./alert-dialog";
+} from "../../components/ui/select";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,  AlertDialogFooter,  AlertDialogTitle } from "../../components/ui/alert-dialog";
 import { Camera } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
 import type { EditUserByAdminFormData } from "@/features/admin/admin.types";
 import { Button } from "antd";
 

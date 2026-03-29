@@ -36,7 +36,6 @@ export const blogApi = createApi({
         url: `/blogs/delete-blog/${_id}`,
         method: "DELETE",
       }),
-      
     }),
     getBlogByIdApi: builder.query<IGetBlogByIdResponse,string>({
       query: (_id) => `/blogs/get-blog-by-id/${_id}`,

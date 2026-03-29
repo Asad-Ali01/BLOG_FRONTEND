@@ -20,8 +20,8 @@ import {
 import { useAppSelector } from "@/features/auth/auth.types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import React, { useEffect, useState } from "react";
-import LogoutAlertDialog from "./LogoutAlertDialog";
-import EditUserDialog from "./editMyInfo";
+import LogoutAlertDialog from "../../features/components/LogoutAlertDialog";
+import EditUserDialog from "@/features/components/editMyInfoModal";
 import { Link, useLocation } from "react-router-dom";
 
 type BaseMenuItem = {

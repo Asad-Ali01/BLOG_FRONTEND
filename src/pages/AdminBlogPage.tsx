@@ -14,7 +14,7 @@ import {
 import { Button } from "antd";
 import { useAppSelector } from "@/features/auth/auth.types";
 import { Delete } from "lucide-react";
-import DeleteConfirmModal from "@/components/ui/delete-blog-modal";
+import DeleteConfirmModal from "@/components/shared/delete-blog-modal";
 import type { IBlog } from "@/features/blog/blog.types";
 function AdminPage() {
   const [expandedIds, setExpandedIds] = useState<string[]>([]);

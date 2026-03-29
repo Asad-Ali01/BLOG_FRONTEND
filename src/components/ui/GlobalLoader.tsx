@@ -19,7 +19,7 @@ export const GlobalLoader = () => {
   Object.values(authMutation || {}).some((q) => q?.status === "pending");
 
 
-  return isFetching ? <div className="h-screen grid place-items-center">
+  return isFetching ? <div className="h-screen z-1000 relative grid place-items-center">
     <Spin size="large"/>
   </div>  : null;
 };

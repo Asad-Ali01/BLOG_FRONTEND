@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useAppSelector } from "@/features/auth/auth.types";
 import { useAppDispatch } from "@/features/auth/auth.types";
-import { Input } from "../ui/input";
+import { Input } from "../../components/ui/input";
 import { useEffect, useState } from "react";
 import { Button } from "antd";
 import PasswordDialog from "./changePasswordModal";

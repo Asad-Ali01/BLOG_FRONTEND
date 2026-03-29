@@ -53,16 +53,16 @@ function Home() {
         <p className="text-sm text-muted-foreground">Fresh stories from the community</p>
       </div>
 
-      <div className="grid  gap-6 sm:grid-cols-2 xl:grid-cols-3">
+      <div className=" gap-6 flex flex-col items-center  ">
       {publishedBlogs.map((blog,index) => {
         const isExpanded = expandedIds.includes(blog._id);
         return (
           <Card
-            className="group overflow-hidden m-0 p-0  w-full border border-border/70 bg-card/95 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+            className="group  m-0 p-0 w-65 sm:w-110 lg:w-155 xl:w-200 2xl:w-300 border border-border/70 bg-card/95 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
             key={blog._id}
             ref={index == publishedBlogs.length - 1 ? lastBlogref : null }
           >
-            <CardHeader className="min-w-0  space-y-3 border-b bg-linear-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900">
+            <CardHeader className="min-w-0 space-y-3 border-b bg-linear-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900">
               <div className="text-xs font-semibold uppercase pt-2 tracking-wide text-muted-foreground">
                 Title
               </div>
@@ -71,15 +71,16 @@ function Home() {
               </CardTitle>
             </CardHeader>
 
-            <CardContent>
-               <div className="text-xs font-semibold  uppercase  tracking-wide text-muted-foreground">
+            <CardContent >
+               <div className="text-xs font-semibold wrap-break-words whitespace-pre-line uppercase  tracking-wide text-muted-foreground">
                 Description
+                
               </div>
-              <p
-                className={`text-sm leading-7 text-left text-foreground/90 ${
-                  !isExpanded ? "line-clamp-4" : ""
-                }`}
-              >
+             <p
+  className={`text-sm leading-7 w-full text-left text-foreground/90 break-words whitespace-pre-line overflow-hidden ${
+    !isExpanded ? "line-clamp-4" : ""
+  }`}
+>
                 {blog.content}
               </p>
               {blog.content.length > 100 && (

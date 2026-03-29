@@ -9,7 +9,7 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 
-import { Input } from "../ui/input";
+import { Input } from "../../components/ui/input";
 import { useState } from "react";
 import { authApi, useUpdateUserPasswordApiMutation } from "@/features/auth/authApi";
 import { useAppDispatch } from "@/features/auth/auth.types";
