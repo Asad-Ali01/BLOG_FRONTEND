@@ -60,7 +60,7 @@ function EditModal({isModalOpen,setIsModalOpen,userId} : EditConfirmModal) {
       return;
     }
     if(data.username != undefined){
-      if(data.username.trim() != " "){
+      if(data.username.trim() != " " && data.username !== allUsers?.data.username){
         updatedData.username = data.username.trim();
       }
     }
