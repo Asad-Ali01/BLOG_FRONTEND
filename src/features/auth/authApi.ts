@@ -6,7 +6,6 @@ import type { EditUserNameRequest, EditUserPasswordRequest, EditUserResponse, Ge
 import {type RootState } from "@/app/store";
 import { baseQueryWithReauth } from "@/api/baseQuery";
 
-
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export const rawBaseQuery = fetchBaseQuery({
